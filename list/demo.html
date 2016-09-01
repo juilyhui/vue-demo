@@ -10,6 +10,27 @@
             <li v-for="item in items">{{ item.message }}</li>
         </ul>
 
+        <ul id="example-2">
+            <li v-for="item in items">{{parentMessage}}-{{$index}}-{{item.message}}</li>
+        </ul>
+
+        <div id="example-3">
+            <div v-for="item in aa" track-by="_uid">{{item._uid}} = {{item.name}}</div>
+        </div>
+
+        <ul id="repeatObject">
+            <li v-for="value in myObject"> {{$key}}:{{value}} </li>
+            <!-- 给对象的键提供一个别名： -->
+            <div v-for="(key, val) in myObject">
+              {{ key }} {{ val }}
+            </div>
+        </ul>
+
+
+        <div id="demo">
+            <span v-for="n in 10">{{n}}</span>
+        </div>
+
 
         <script type="text/javascript" src="./vue.js"></script>
         <script type="text/javascript" src="./main.js"></script>
