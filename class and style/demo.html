@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vue CLass 与 Style 绑定</title>
+    </head>
+    <body>
+        <div id="demo">
+            <div class="static" v-bind:class="{'class-a': isA, 'class-b': isB}">对象语法</div>
+            <!-- 直接绑定数据里的一个对象 -->
+            <div class="static" v-bind:class="classObject">直接绑定数据里的一个对象</div>
+            <!-- 绑定一个返回对象的计算属性 -->
+            <div class="static" v-bind:class="{'class-a': classComputed}">绑定一个返回对象的计算属性</div>
+        </div>
+
+
+        <div id="demo2">
+            <div class="static" v-bind:class="[classA, classB]">数组语法</div>
+            <!-- 三元表达式    此例始终添加 classA，但是只有在 isB 是 true 时添加 classB 。-->
+            <div v-bind:class="[classA, isB ? classB: '']"></div>
+            <!--在 1.0.19+ 中，可以在数组中使用对象语法 -->
+            <div v-bind:class="[classA, {classB: isB, classC: isC}]"></div>
+        </div>
+
+
+        <div id="demo3">
+            <div v-bind:style="{color: activeColor, fontSize: fontSize + 'px'}"></div>
+
+            <!-- 直接绑定到一个样式对象通常更好 -->
+            <div v-bind:style="styleObject"></div>
+
+        </div>
+
+
+        <div id="demo4">
+            <div v-bind:style="[styleObjectA, styleObjectB]"></div>
+        </div>
+
+        <script src="./vue.js" charset="utf-8"></script>
+        <script src="./main.js" charset="utf-8"></script>
+    </body>
+</html>

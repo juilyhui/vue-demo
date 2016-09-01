@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vue 数据绑定</title>
+    </head>
+    <body id="body">
+        <!-- 数据绑定最基本的形式：文本插值      双大括号 {{}} 同v-text-->
+        <span>Message: {{msg}}</span>
+        <!-- 只处理单次插值，今后的数据变化就不会再引起插值更新 -->
+        <span>This will never change : {{*msg}}</span>
+        <!-- 双 Mustache 标签将数据解析为纯文本而不是 HTML。为了输出真的 HTML 字符串，需要用三 Mustache 标签： {{{}}} 同v-html  不安全-->
+        <div class="">{{{raw_html}}}</div>
+        <!-- Mustache 标签也可以用在 HTML 特性 (Attributes) 内： -->
+        <div id="item-{{id}}"></div>
+
+
+
+        <!-- 绑定表达式 -->
+        <!--  Vue.js 在数据绑定内支持全功能的 JavaScript 表达式： -->
+        <div>{{number+1}}</div>
+        <div class="">
+            {{ok? 'Yes' : 'No'}}
+        </div>
+        <div class="">
+            {{ message.split('').reverse().join('') }}
+        </div>
+
+
+        <!-- 过滤器 -->
+        <!-- <div class="">
+            {{message | filterA 'arg1' arg2}}
+        </div> -->
+
+
+
+        <!-- 参数 -->
+        <!-- 这里 href 是参数，它告诉 v-bind 指令将元素的 href 特性跟表达式 url 的值绑定。 -->
+        <!-- href="{{url}}"  得到的结果一样 -->
+        <!-- v-bind缩写 -->
+        <a v-bind:href="url">百度链接</a>
+        <a :href="url">百度链接</a>
+        <!-- v-on缩写 -->
+        <a v-on:click="doSomething"></a>
+        <a @click="doSomething"></a>
+
+
+
+
+
+        <script src="./vue.js" charset="utf-8"></script>
+        <script src="./main.js" charset="utf-8"></script>
+    </body>
+</html>

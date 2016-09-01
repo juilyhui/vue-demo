@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vue过渡</title>
+        <style media="screen">
+            /*必需*/
+            .expand-transition{
+                transition: all 0.3s ease;
+                height: 30px;
+                padding: 10px;
+                background-color: #eee;
+                overflow: hidden;
+            }
+            /* .expand-enter 定义进入的开始状态 */
+            /* .expand-leave 定义离开的结束状态 */
+            .expand-enter, .expand-leave{
+                height: 0;
+                padding: 0 10px;
+                opacity: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="demo1">
+            <!-- 为了应用过渡效果，需要在目标元素上使用 transition 特性： -->
+            <div v-if="show" transition="expand">hello</div>
+            <input type="button" name="buttom" value="toggle" v-on:click="toggle">
+        </div>
+
+        <p transition="fade"></p>
+
+        
+
+
+        <script type="text/javascript" src="./vue.js"></script>
+        <script type="text/javascript" src="./main.js"></script>
+    </body>
+</html>

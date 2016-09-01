@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vue 条件渲染</title>
+    </head>
+    <body>
+
+        <div id="demo1">
+            <template v-if="ok">
+                <h1>Title</h1>
+                <p>Paragraph 1</p>
+                <p>Paragraph 2</p>
+            </template>
+        </div>
+
+        <div id="demo2">
+            <div v-if="Math.random() > 0.5">Sorry</div>
+            <div v-else>Not sorry</div>
+        </div>
+
+
+
+
+        <script type="text/javascript" src="./vue.js"></script>
+        <script type="text/javascript" src="./main.js"></script>
+    </body>
+</html>
