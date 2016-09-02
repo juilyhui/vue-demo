@@ -25,7 +25,7 @@ var myMixin = {
 * .extend()    创建基础 Vue 构造器的“子类”。参数是一个对象，包含组件选项。
 */
 
-// 创建可复用的构造器
+// 创建可复用的构造器 组件
 var Component = Vue.extend({
     mixins: [myMixin]  // 定义的Component,继承了一个名为myMixin的混合
 })
