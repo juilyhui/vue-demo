@@ -93,7 +93,7 @@ Vue.directive('my-directive', {
 // 注册 第二种写法 传入一个函数
 Vue.directive('my-directive', function(){
     // 这里相当于上面的 update 函数
-}）
+})
 // 获取，返回已注册的指令
 var myDirective1 = Vue.directive('my-directive');
 
@@ -176,3 +176,116 @@ Vue.use(MyPulgin, {someOption: true}); // 传入一个选项对象
 
 //----- Vue.mixin(mixin) 全局应用一个混合，将影响所有 Vue 实例。插件作者可以用它向组件注入自定义逻辑。不推荐。
 // @param {Object} mixin
+
+
+
+
+/*
+* 选项/数据
+*/
+
+//----- data   类型： Object | Func
+// 在实例创建之后，可以用 vm.$data 访问原始数据对象。Vue 实例也代理了数据对象所有的属性。
+// 名字以 _ 或 $开始的属性不会被 Vue 实例代理，因为它们可能与 Vue 的内置属性与 API 方法冲突。用 vm.$data._property 访问它们。
+var data = {a: 1};
+var dataVm = new Vue({
+    data: data
+})
+console.log(dataVm.a)  // -> 1
+dataVm.$data === data  // true
+// 在组件中data必须是函数
+var dataComponent = Vue.extend({
+    data: function(){
+        return {a: 1}
+    }
+})
+
+//----- props   类型： Array | Object
+// 包含一些特性：期望使用的父组件数据的属性。可以是数组或对象。对象用于高级配置，如类型检查，自定义验证，默认值等。
+// 简单语法
+Vue.component('props-demo-simple', {
+    props: ['size', 'myMessage']
+})
+// 对象语法，指定验证要求
+Vue.component('props-demo-advanced', {
+    props: {
+        // 只检测类型
+        size: Number,
+        // 检测类型 + 其他验证
+        name: {
+            type: String,
+            required: true,
+            // 双向绑定
+            twoWay: true
+        }
+    }
+})
+
+//----- propsData   类型：Object   1.0.22+
+// 只用于 new 创建实例中。在创建实例的过程传递 props。主要作用是方便测试。
+var Comp = Vue.extend({
+    props: ['msg'],
+    template: '<div>{{msg}}</div>'
+})
+var compVm = new Comp({
+    propsData: {
+        msg: 'hello'
+    }
+})
+
+//----- computed   类型：Object  实例计算属性
+var computedVm = new Vue({
+    data: {a: 1},
+    computed: {
+        // 仅读取，值只需为函数
+        aDouble: function(){
+            return this.a * 2;
+        }
+        // 读取和设置
+        aPlus: {
+            get: function(){
+                return this.a + 1;
+            },
+            set: function(v){
+                this.a = v - 1;
+            }
+        }
+    }
+})
+computedVm.aPlus // -> 2
+computedVm.aPlus = 3;  // 调用了aPlus里的set函数，set(3),this.a = 3-1 = 2;
+computedVm.a // -> 2
+computedVm.aDouble // -> 4
+
+//----- methods   类型：Object  实例方法
+// 实例可以直接访问这些方法，也可以用在指令表达式内。方法的 this 自动绑定到实例。
+var methodsVm = new Vue({
+    data: {a: 1},
+    methods: {
+        plus: function(){
+            this.a++;
+        }
+    }
+})
+methodsVm.plus();
+methodsVm.a // -> 2
+
+//----- watch  类型：Object
+// 一个对象，键是观察表达式，值是对应回调。值也可以是方法名，或者是对象，包含选项。在实例化时为每个键调用 $watch() 。
+var watchVm = new Vue({
+    data: {
+        a: 1
+    },
+    watch: {
+        'a': function(val, oldVal){
+            console.log('new: %s, old: %s', val, oldVal);
+        },
+        'b': 'someMethod', // someMethod 为方法名
+        // 深度 watcher
+        'c': {
+            handler: function(val, oldVal){/*...*/},
+            deep: true
+        }
+    }
+})
+watchVm.a = 2 // -> new: 2, old: 1
