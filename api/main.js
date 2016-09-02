@@ -47,7 +47,7 @@ var extendExample = new extendObj({
         alias: 'juily'
     }
 })
-extendExample.$mount("#extend-div")
+extendExample.$mount("#extend-div") // 初始化时没有指定元素（new Vue()中），调用vm.$mount()手动编译
 
 //----- Vue.nextTick(callback)     延迟回调在下次 DOM 更新循环之后执行。在修改数据之后立即使用这个方法，等待 DOM 更新。
 // @params {Func} callback
@@ -181,7 +181,7 @@ Vue.use(MyPulgin, {someOption: true}); // 传入一个选项对象
 
 
 /*
-* 选项/数据
+* 选项/数据 -----
 */
 
 //----- data   类型： Object | Func
@@ -240,7 +240,7 @@ var computedVm = new Vue({
         // 仅读取，值只需为函数
         aDouble: function(){
             return this.a * 2;
-        }
+        },
         // 读取和设置
         aPlus: {
             get: function(){
@@ -289,3 +289,37 @@ var watchVm = new Vue({
     }
 })
 watchVm.a = 2 // -> new: 2, old: 1
+
+
+
+
+ /*
+ * 选项 / Dom -----
+ */
+
+//----- el   类型：String | HTMLElement | Function（在组件定义中只能是函数）
+// 值可以是 CSS 选择符，或实际 HTML 元素，或返回 HTML 元素的函数。元素可以用 vm.$el 访问。
+// 如果在初始化时指定了这个选项，实例将立即进入编译过程。否则，需要调用 vm.$mount()，手动开始编译。
+
+//----- template 类型：String   实例模板。
+// 模板默认替换挂载元素。如果 replace 选项为 false，模板将插入挂载元素内。
+// 两种情况下，挂载元素的内容都将被忽略，除非模板有内容分发 slot。
+
+//----- replace   类型： Boolean   默认为：true   只能与 template 选项一起用。   决定是否用模板替换挂载元素。
+// 如果设为 true（这是默认值），模板将覆盖挂载元素，并合并挂载元素和模板根节点的 attributes。
+// 如果设为 false 模板将覆盖挂载元素的内容，不会替换挂载元素自身。
+new Vue({
+    el: '#replace',
+    template: '<p class="bar">replaced</div>'
+})
+// 把html中的<div id="replace" class="foo"></div>替换成<p class="foo bar" id="replace">replaced</p>
+// replace 设为 false 的情况
+new Vue({
+    el: '#insert',
+    replace: false,
+    template: '<p class="bar">inserted</p>'
+})
+// 获取到html中的<div id="insert" class="foo"></div>，变成
+// <div id="insert" class="foo">
+//   <p class="bar">inserted</p>
+// </div>
