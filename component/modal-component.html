@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            .dialog-active{
+                display: block!important;
+            }
+            .dialog{
+                display: none;
+            }
+            .dialog{
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                margin: auto auto;
+                border: 1px solid red;
+                width: 300px;
+                height: 200px;
+            }
+            header{
+                background: red;
+                color: #fff;
+                text-align: center;
+            }
+            footer{
+                text-align: center;
+            }
+            footer button{
+                width: 70%;
+                height: 40px;
+            }
+            [v-cloak]{
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div id="app">
+
+            <modal-dialog v-bind:show.sync="show" v-cloak>
+
+                <header class="dialog-header" slot="header">
+                    <h1 class="dialog-title">提示信息</h1>
+                </header>
+
+                <div class="dialog-body" slot="header">
+                    <p>你想在对话框中放什么内容都可以!</p>
+                    <p>你可以放一段文字，也可以放一些表单，或者是一些图片。</p>
+                </div>
+
+                <footer class="dialog-footer" slot="footer">
+                    <button type="button" name="button" class="btn" @click="closeDialog">关闭</button>
+                </footer>
+
+            </modal-dialog>
+
+            <button type="button" name="button" class="btn btn-open" @click="openDialog">打开对话框</button>
+        </div>
+
+
+
+        <template id="dialog-template">
+            <div class="dialogs">
+                <div class="dialog" v-bind:class="{'dialog-active': show}">
+                    <div class="dialog-content">
+                        <div class="close rotate">
+                            <span class="iconfont icon-close" @click="close"></span>
+                        </div>
+                        <slot name="header"></slot>
+                        <slot name="body"></slot>
+                        <slot name="footer"></slot>
+                    </div>
+                </div>
+                <div class="dialog-overlog"></div>
+            </div>
+        </template>
+
+        <script src="./vue.js" charset="utf-8"></script>
+        <script type="text/javascript">
+
+            Vue.component('modal-dialog', {
+                template: '#dialog-template',
+                props: ['show'],
+                methods: {
+                    close: function(){
+                        this.show = false;
+                    }
+                }
+            })
+
+            new Vue({
+                el: '#app',
+                data: {
+                    show: false,
+                },
+                methods: {
+                    openDialog: function(){
+                        console.log("open!!!");
+                        this.show = true;
+                    },
+                    closeDialog: function(){
+                        console.log("close!!!");
+                        this.show = false;
+                    }
+                }
+            })
+
+        </script>
+    </body>
+</html>
