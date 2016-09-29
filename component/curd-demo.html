@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>CURD示例 增删改查</title>
+    </head>
+    <body>
+
+        <div class="" id="app">
+            <div class="container">
+                <div class="form-group">
+                    <label>Search</label>
+                    <input type="text" class="search-input" v-model="searchQuery">
+                </div>
+            </div>
+            <div class="container">
+                <simple-grid :data-list="people" :columns="columns" :search-key="searchQuery"></simple-grid>
+            </div>
+        </div>
+
+        <!-- template  组件模板-->
+        <template id="grid-template">
+            <table>
+                <thead>
+                    <tr>
+                        <th v-for='col in columns'>
+                            {{col.name | capitalize}}
+                        </th>
+                        <th>
+                            Delete
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(index,entry) in dataList | filterBy searchKey">
+                        <td v-for="col in columns">
+                            {{entry[col.name]}}
+                        </td>
+                        <td class="text-center">
+                            <button type="button" @click="deleteItem(index)">delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+
+        <script src="./vue.js" charset="utf-8"></script>
+        <script type="text/javascript">
+            // simple-grid 是html的标签名称
+            Vue.component('simple-grid', {
+                template: "#grid-template", // 用template定义组件模板
+                props: ['dataList', 'columns', 'searchKey'],
+                methods: {
+                    deleteItem: function(index){
+                        this.dataList.splice(index, 1);
+                    }
+                }
+            })
+
+            var demo = new Vue({
+                el: '#app',
+                data: {
+                    searchQuery: '',
+                    columns: [
+                        {name: 'name'},
+                        {name: 'age'},
+                        {name: 'sex'},
+                    ],
+                    people: [
+                        {
+                            name: 'Jack',
+                            age: 30,
+                            sex: 'Male'
+                        },
+                        {
+                            name: 'Bill',
+                            age: 23,
+                            sex: 'Male'
+                        },
+                        {
+                            name: 'Tracy',
+                            age: 23,
+                            sex: 'Female'
+                        },
+                        {
+                            name: 'Chris',
+                            age: 23,
+                            sex: 'Male'
+                        },
+                    ],
+                }
+            })
+
+        </script>
+    </body>
+</html>

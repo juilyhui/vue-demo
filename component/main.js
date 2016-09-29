@@ -349,6 +349,11 @@ new Vue({
 /*
 * 父子组件通信
 */
+/*
+父组件访问子组件：使用$children或$refs
+子组件访问父组件：使用$parent
+子组件访问根组件：使用$root
+*/
 
 // 父链  子组件可以用 this.$parent 访问它的父组件。根实例的后代可以用 this.$root 访问它。父组件有一个数组 this.$children，包含它所有的子元素。
 
